@@ -747,12 +747,27 @@ throughput = 1 / (latency + 0.5)
 # ======================
 # 📊 PERFORMANCE
 # ======================
+# st.subheader("System Performance")
+
+# c1, c2, c3= st.columns(3)
+# c1.metric("Latency", round(latency, 2))
+# c2.metric("Energy", round(energy, 2))
+# c3.metric("Throughput", round(throughput, 3))
+
+# ======================
+# 📊 METRICS DISPLAY
+# ======================
 st.subheader("System Performance")
 
-c1, c2, c3 = st.columns(3)
-c1.metric("Latency", round(latency, 2))
-c2.metric("Energy", round(energy, 2))
-c3.metric("Throughput", round(throughput, 3))
+# 🔥 Calculate inflight flits (NEW ADDITION)
+inflight = np.sum(traffic) * size
+
+c1, c2, c3, c4 = st.columns(4)
+
+c1.metric("Latency", f"{round(latency, 2)} ns")
+c2.metric("Energy", f"{round(energy, 2)} pJ")
+c3.metric("Throughput", f"{round(throughput, 3)} Gbps")
+c4.metric("Inflight Flits", round(inflight, 2))
 
 fig_perf = go.Figure(go.Bar(
     x=["Latency", "Energy", "Throughput"],
